@@ -5,16 +5,83 @@
     <title>web1</title>
 </head>
 <body>
-    <h1><a href="web1.html">마라톤 대회 일정</a></h1>
+    <h3><a href="web1.html">이양세님의 마라톤 대회 일정</a></h1>
     <ol>
         <li><a href="2.html">6월</a></li>
         <li><a href="3.html">10월</a></li>
         <li><a href="4.html">11월</a></li>
     </ol>
+    <p><a href="https://blog.naver.com/yiyangse">이양세 블로그 바로가기▶"취미는 성장"</a></p>
     <h2>대회 일정</h2>
     <p><a href="http://www.marathon.pe.kr/index_calendar.html">마라톤 온라인 공식 대회일정</a></p>
     <h2>대회 훈련 하기</h2>
-    <p><a href="http://marathon.pe.kr/pds/pace_calculator.html">페이스 산출하기</a></p>
+    <p><a href="http://marathon.pe.kr/pds/pace_calculator.html">대회 페이스 산출하기</a></p>
+
+    <meta charset="utf-8">
+    <title>러닝머신 트레드밀 속도 및 마라톤 페이스 계산기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input {
+            margin: 5px 0;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>러닝머신 트레드밀 속도 계산기</h1>
+    <form id="pace-form">
+        <label for="distance">거리 (단위: km):</label>
+        <input type="number" id="distance" required>
+        <br>
+        <label for="time">시간 (단위: 분):</label>
+        <input type="number" id="time" required>
+        <br>
+        <button type="submit">계산하기</button>
+    </form>
+    <div class="result" id="result"></div>
+
+    <h1>트레드밀 속도에서 마라톤 페이스 계산기</h1>
+    <form id="speed-form">
+        <label for="speed">속도 (단위: km/h):</label>
+        <input type="number" id="speed" required>
+        <br>
+        <button type="submit">계산하기</button>
+    </form>
+    <div class="result" id="result2"></div>
+
+    <script>
+        document.getElementById('pace-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const distance = parseFloat(document.getElementById('distance').value);
+            const time = parseFloat(document.getElementById('time').value);
+
+            if (distance > 0 && time > 0) {
+                const hours = time / 60;
+                const speed = distance / hours;
+                document.getElementById('result').textContent = `트레드밀 속도: ${speed.toFixed(2)} km/h`;
+            } else {
+                document.getElementById('result').textContent = '올바른 값을 입력하세요.';
+            }
+        });
+
+        document.getElementById('speed-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const speed = parseFloat(document.getElementById('speed').value);
+
+            if (speed > 0) {
+                const paceMinutes = Math.floor(60 / speed);
+                const paceSeconds = Math.round((60 / speed - paceMinutes) * 60);
+                document.getElementById('result2').textContent = `마라톤 페이스: ${paceMinutes}분 ${paceSeconds}초 / km`;
+            } else {
+                document.getElementById('result2').textContent = '올바른 값을 입력하세요.';
+            }
+        });
+    </script>
 </body>
 </html>
-
